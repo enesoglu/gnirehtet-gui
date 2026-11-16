@@ -34,6 +34,11 @@ impl EventSink for WebviewEvents {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let app = tauri::Builder::default()
+        .plugin(
+            tauri_plugin_autostart::Builder::new()
+                .app_name("gnirehtet-gui")
+                .build(),
+        )
         .setup(|app| {
             let events: Arc<dyn EventSink> = Arc::new(WebviewEvents(app.handle().clone()));
             logger::init(Arc::clone(&events));

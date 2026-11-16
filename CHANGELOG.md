@@ -6,6 +6,11 @@ project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Optional **Run at startup** preference, backed by the operating system's
+  current-user startup registration with error handling and retry.
+
 ### Changed
 
 - Closing the desktop window hides it in the system tray and keeps the connection

@@ -84,6 +84,13 @@ menu to reopen the window. Choose **Quit** from that menu to stop the VPN
 and relay and exit the app.
 If something goes wrong, see [Troubleshooting](docs/TROUBLESHOOTING.md).
 
+### Run at startup
+
+Open **Preferences → Startup** and enable **Run at startup** to launch the
+app when you sign in. This is off by default and can be turned off in the same
+place. Startup registration is stored by the operating system, not in browser
+storage. Starting the app does not automatically connect your phone.
+
 ## Limitations
 
 These come from gnirehtet itself:

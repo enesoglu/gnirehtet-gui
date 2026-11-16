@@ -118,6 +118,12 @@ Before a release, go through these with a real phone:
       the port is in use and leaves the other relay alone.
 - [ ] adb missing from `PATH`: the window explains how to install it, and
       **Check again** finds it once installed.
+- [ ] **Preferences → Startup**: loading reads the OS setting; enable and
+      disable work and remain correct after reopening Preferences. A failed
+      read/write offers a retry without claiming the change succeeded.
+- [ ] Enable **Run at startup**, sign out and back in: Gnirehtet opens without
+      connecting a phone automatically. Disable it and confirm it no longer
+      launches at sign-in.
 - [ ] Custom DNS servers and port from Preferences are applied.
 - [ ] **Preferences → About** opens the GitHub page in the browser.
 
