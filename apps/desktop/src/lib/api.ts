@@ -22,6 +22,9 @@ export const api = {
   installClient: (serial: string) => invoke<void>("install_client", { serial }),
   repairTunnel: (serial: string) => invoke<void>("repair_tunnel", { serial }),
   getEnvironment: () => invoke<Environment>("get_environment"),
+  isAutostartEnabled: () => invoke<boolean>("plugin:autostart|is_enabled"),
+  enableAutostart: () => invoke<void>("plugin:autostart|enable"),
+  disableAutostart: () => invoke<void>("plugin:autostart|disable"),
   openRepo: () => invoke<void>("open_repo"),
 };
 
