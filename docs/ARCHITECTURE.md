@@ -89,6 +89,8 @@ serial of the device whose client was started.
 - **Disconnect** stops the client on the device, removes the tunnel, and stops
   the relay. The computer side is always stopped, even when the phone can no
   longer be reached.
+- **Close.** The native close handler hides the main window without stopping
+  the session. A system tray menu restores the window or exits the app.
 - **Exit.** On `RunEvent::Exit`, the relay is stopped immediately and the
   phone gets a bounded amount of time to stop its client. The app never touches
   a device it did not start a client on.
@@ -180,8 +182,8 @@ Installed layout on Linux:
 
 - The content security policy allows only the app's own scripts and styles and
   the Tauri IPC channel; the app loads nothing remote.
-- Capabilities are reduced to `core:default` plus window destruction (used by
-  the quit confirmation). No shell, filesystem or opener plugins are included;
+- Capabilities are reduced to `core:default`. Window hiding and the tray
+  menu are handled in Rust. No shell, filesystem or opener plugins are included;
   the one link the app opens (its GitHub page) goes through the `open_repo`
   command, which takes no arguments.
 - Values from the UI never reach a shell unvalidated. The device serial, DNS

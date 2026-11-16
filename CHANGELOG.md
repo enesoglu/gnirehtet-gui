@@ -6,6 +6,12 @@ project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Closing the desktop window hides it in the system tray and keeps the connection
+  running. The tray menu can restore the window or quit and stop the VPN.
+
+
 ## [1.0.0]
 
 First stable release.

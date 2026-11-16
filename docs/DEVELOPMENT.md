@@ -104,8 +104,12 @@ Before a release, go through these with a real phone:
 - [ ] **Disconnect**: the VPN key icon disappears from the phone.
 - [ ] Unplug while connected: **Connection interrupted**. Plug back in: the
       tunnel is restored and the phone is online again.
-- [ ] Quit while connected: the confirmation dialog appears, and the VPN stops
-      on the phone.
+- [ ] Close while idle and while connected: the window disappears, the app
+      stays in the system tray, and an active phone connection keeps working.
+- [ ] Restore from the tray icon and **Show Gnirehtet** menu item, including
+      after minimizing: the main window is visible and focused.
+- [ ] Choose **Quit** from the tray while connected: the app exits, the relay
+      stops, and the VPN stops on the phone.
 - [ ] Unauthorized phone (revoke USB debugging authorizations): a clear message
       appears, and the phone becomes ready after accepting the prompt.
 - [ ] Two phones connected: the picker appears, and the selected phone
