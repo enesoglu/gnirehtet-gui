@@ -77,6 +77,11 @@ system and for preparing the phone.
 4. Accept the *Connection request* (VPN) prompt on the phone.
 
 The phone now uses the computer's connection. Click **Disconnect** to stop.
+
+Closing the window keeps Gnirehtet running in the system tray, so the phone
+remains connected. Click the tray icon or choose **Show Gnirehtet** from its
+menu to reopen the window. Choose **Quit** from that menu to stop the VPN
+and relay and exit the app.
 If something goes wrong, see [Troubleshooting](docs/TROUBLESHOOTING.md).
 
 ## Limitations
