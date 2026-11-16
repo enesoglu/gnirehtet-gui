@@ -118,6 +118,15 @@ The pure transition helpers live in `session-logic.ts` and are unit-tested.
 Settings (port, DNS, routes, theme) are validated and stored in `localStorage`
 (`settings.svelte.ts`).
 
+### Startup preference
+
+`tauri-plugin-autostart` registers the installed executable for the current
+user at sign-in (Windows Run entry, Linux autostart entry, or macOS launch
+agent). It is opt-in. Preferences reads the OS setting, disables changes while
+loading or saving, and requires a fresh read after failures. The browser demo
+cannot change startup registration. The app opens normally at sign-in; no
+phone connection is started automatically.
+
 ### Tauri commands
 
 | Command | Description |
@@ -182,7 +191,8 @@ Installed layout on Linux:
 
 - The content security policy allows only the app's own scripts and styles and
   the Tauri IPC channel; the app loads nothing remote.
-- Capabilities are reduced to `core:default`. Window hiding and the tray
+- Capabilities include `core:default` and only the autostart plugin commands
+  for reading, enabling, and disabling startup registration. Window hiding and the tray
   menu are handled in Rust. No shell, filesystem or opener plugins are included;
   the one link the app opens (its GitHub page) goes through the `open_repo`
   command, which takes no arguments.
