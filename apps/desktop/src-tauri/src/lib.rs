@@ -4,6 +4,7 @@ mod logger;
 mod paths;
 mod relay_output;
 mod session;
+mod tray;
 mod types;
 
 use gnirehtet_controller::gnirehtet_adb::{AdbClient, AdbConfig};
@@ -52,8 +53,10 @@ pub fn run() {
             });
             app.manage(Session::new(adb, tools.relay.clone(), events));
             app.manage(tools);
+            tray::setup(app)?;
             Ok(())
         })
+        .on_window_event(tray::on_window_event)
         .invoke_handler(tauri::generate_handler![
             commands::check_adb,
             commands::list_devices,
