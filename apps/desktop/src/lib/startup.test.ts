@@ -12,15 +12,12 @@ function fixture(initial = false) {
       if (failRead) throw new Error("read denied");
       return enabled;
     },
-    async enableAutostart() {
+    async setAutostart(next) {
       writes++;
       if (failWrite) throw new Error("write denied");
-      enabled = true;
-    },
-    async disableAutostart() {
-      writes++;
-      if (failWrite) throw new Error("write denied");
-      enabled = false;
+      enabled = next;
+      if (failRead) throw new Error("read denied");
+      return enabled;
     },
   };
   const preference = new StartupPreference(backend, (next) => (state = next));

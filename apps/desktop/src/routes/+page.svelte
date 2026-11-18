@@ -5,22 +5,52 @@
   import ConnectionView from "$lib/components/ConnectionView.svelte";
   import LogsView from "$lib/components/LogsView.svelte";
   import PreferencesView from "$lib/components/PreferencesView.svelte";
+  import Dialog from "$lib/components/ui/dialog.svelte";
   import Sheet from "$lib/components/ui/sheet.svelte";
+  import { listen } from "@tauri-apps/api/event";
   import { app } from "$lib/app.svelte";
+  import { api, isTauri } from "$lib/api";
 
   let panel = $state<Panel | null>(null);
+  let quitDialogOpen = $state(false);
+  let quitting = $state(false);
+
+  async function quit() {
+    quitting = true;
+    await app.disconnect();
+    try {
+      await api.quit();
+    } catch {
+      quitting = false;
+      quitDialogOpen = false;
+    }
+  }
 
   onMount(() => {
     void app.start();
+    // Sent when the window is closed while connected and there is no system
+    // tray to keep the app in: quitting would turn off the phone's VPN.
+    let unlistenQuit: (() => void) | null = null;
+    let unmounted = false;
+    if (isTauri()) {
+      void listen("quit-requested", () => {
+        if (!quitting) quitDialogOpen = true;
+      }).then((unlisten) => {
+        if (unmounted) unlisten();
+        else unlistenQuit = unlisten;
+      });
+    }
     return () => {
+      unmounted = true;
       app.stop();
+      unlistenQuit?.();
     };
   });
 </script>
 
 <div class="window">
   <HeaderBar bind:panel />
-  <main class:covered={panel !== null}>
+  <main class:covered={panel !== null || quitDialogOpen}>
     <ConnectionView />
   </main>
   <Banner onShowLog={() => (panel = "log")} />
@@ -36,6 +66,15 @@
 >
   <PreferencesView />
 </Sheet>
+
+<Dialog
+  bind:open={quitDialogOpen}
+  title="Disconnect and quit?"
+  description="The phone is still using this connection. Quitting turns off its VPN and stops the relay. To keep it running with the window closed, install a system tray (on Linux: libayatana-appindicator3 and a panel that shows tray icons)."
+  confirmLabel={quitting ? "Disconnecting…" : "Disconnect and quit"}
+  busy={quitting}
+  onConfirm={quit}
+/>
 
 <style>
   .window {

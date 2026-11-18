@@ -13,8 +13,10 @@ project follows [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- Closing the desktop window hides it in the system tray and keeps the connection
-  running. The tray menu can restore the window or quit and stop the VPN.
+- Closing the window while a phone is connected hides it in the system tray and
+  keeps the connection running. The tray menu can restore the window or quit
+  and stop the VPN. Without a tray, closing asks before disconnecting.
+- Launching the app while it is already running shows the existing window.
 
 
 ## [1.0.0]

@@ -7,8 +7,8 @@ export type StartupState = {
 
 export interface StartupBackend {
   isAutostartEnabled(): Promise<boolean>;
-  enableAutostart(): Promise<void>;
-  disableAutostart(): Promise<void>;
+  /** Applies the change and resolves with the state read back from the OS. */
+  setAutostart(enabled: boolean): Promise<boolean>;
 }
 
 export const initialStartupState: StartupState = {
@@ -48,9 +48,7 @@ export class StartupPreference {
     if (this.#state.busy || !this.#state.loaded) return;
     this.#publish({ busy: true, error: null });
     try {
-      if (enabled) await this.backend.enableAutostart();
-      else await this.backend.disableAutostart();
-      this.#publish({ enabled: await this.backend.isAutostartEnabled(), loaded: true });
+      this.#publish({ enabled: await this.backend.setAutostart(enabled), loaded: true });
     } catch {
       // A failed operation may have changed the OS before returning an error.
       // Require a fresh read before allowing another change.
