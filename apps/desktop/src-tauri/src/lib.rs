@@ -62,8 +62,13 @@ pub fn run() {
             app.manage(Session::new(adb, tools.relay.clone(), events));
             app.manage(tools);
 
+            // Tauri only exposes the AppImage path on Linux.
+            #[cfg(target_os = "linux")]
+            let appimage = app.env().appimage;
+            #[cfg(not(target_os = "linux"))]
+            let appimage: Option<std::ffi::OsString> = None;
             let autostart =
-                autostart::Autostart::new(app.env().appimage.as_deref().map(std::path::Path::new));
+                autostart::Autostart::new(appimage.as_deref().map(std::path::Path::new));
             // Development builds must not repoint the entry at target/debug.
             if !cfg!(debug_assertions) {
                 autostart.refresh();
